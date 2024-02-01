@@ -20,8 +20,3 @@ spring:
     host: localhost
     database: 0
     password:
-
-server:
-  # 在部署时，可以通过 ipv4 访问
-  address: 0.0.0.0
-  port: 9996
