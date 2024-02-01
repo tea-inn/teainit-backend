@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.teainn.project.mapper.system.MenuMapper">
+
+    <resultMap id="BaseResultMap" type="top.teainn.project.model.entity.Menu">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="menuName" column="menuName" jdbcType="VARCHAR"/>
+            <result property="parentId" column="parentId" jdbcType="BIGINT"/>
+            <result property="perms" column="perms" jdbcType="VARCHAR"/>
+            <result property="sortNum" column="sortNum" jdbcType="TIMESTAMP"/>
+            <result property="type" column="type" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,menuName,parentId,
+        perms,sortNum,type,createTime,updateTime,
+        isDelete
+    </sql>
+    <select id="listParentMenu" resultType="top.teainn.project.model.entity.Menu">
+        SELECT
+        id,menuName,parentId,
+        perms,createTime,updateTime,
+        isDelete
+        FROM
+        menu
+        <where>
+                parentId = 0
+            <if test="menuName != null and menuName != ''">
+                AND menuName like concat('%',#{menuName},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listParentId" resultType="top.teainn.project.model.vo.MenuTreeVO">
+        SELECT
+        id,menuName,parentId,sortNum,type,
+        perms,createTime,updateTime
+        FROM
+        menu
+        <where>
+            <if test="parentId != null">
+                AND parentId = #{parentId}
+            </if>
+            AND isDelete = 0
+        </where>
+        ORDER BY sortNum ASC;
+
+    </select>
+
+</mapper>

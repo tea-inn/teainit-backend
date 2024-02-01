@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.teainn.project.mapper.system.RoleMenuMapper">
+
+    <resultMap id="BaseResultMap" type="top.teainn.project.model.entity.RoleMenu">
+            <id property="roleId" column="roleId" jdbcType="BIGINT"/>
+            <result property="menuId" column="menuId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        roleId,menuId
+    </sql>
+</mapper>

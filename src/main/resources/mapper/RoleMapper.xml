@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.teainn.project.mapper.system.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="top.teainn.project.model.entity.Role">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="roleName" column="roleName" jdbcType="VARCHAR"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,roleName,createTime,
+        updateTime,isDelete
+    </sql>
+    <insert id="insertRoleMenuPerms">
+        insert into
+        role_menu
+        values
+        <foreach collection="havePermsMenuIdList" separator="," item="item">
+            (#{roleId},#{item})
+        </foreach>
+    </insert>
+    <delete id="deleteRoleMenuByRoleId">
+        delete from role_menu where roleId = #{roleId}
+    </delete>
+    <select id="selectRolePerms" resultType="java.lang.Long">
+        select menuId from role_menu where roleId = #{roleId}
+    </select>
+</mapper>

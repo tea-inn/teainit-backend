@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.teainn.project.mapper.system.OperLogMapper">
+
+    <resultMap id="BaseResultMap" type="top.teainn.project.model.entity.OperLog">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="userAccount" column="userAccount" jdbcType="VARCHAR"/>
+        <result property="operModule" column="operModule" jdbcType="VARCHAR"/>
+        <result property="operType" column="operType" jdbcType="INTEGER"/>
+        <result property="operState" column="operState" jdbcType="TINYINT"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="operAddress" column="operAddress" jdbcType="VARCHAR"/>
+        <result property="operMethod" column="operMethod" jdbcType="VARCHAR"/>
+        <result property="operUrl" column="operUrl" jdbcType="VARCHAR"/>
+        <result property="requestParam" column="requestParam" jdbcType="VARCHAR"/>
+        <result property="responseInfo" column="responseInfo" jdbcType="VARCHAR"/>
+        <result property="errorInfo" column="errorInfo" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,operModule,
+        operType,operState,ip,
+        operAddress,operMethod,operUrl,
+        requestParam,responseInfo,errorInfo,
+        createTime,updateTime,isDelete,
+        userAccount
+    </sql>
+</mapper>

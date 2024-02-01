@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.teainn.project.mapper.system.UserRoleMapper">
+
+    <resultMap id="BaseResultMap" type="top.teainn.project.model.entity.UserRole">
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="roleId" column="roleId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        userId,roleId
+    </sql>
+</mapper>

@@ -1,0 +1,71 @@
+# teainn
+
+# 指定 docker-compose 版本
+version: "3"
+
+services:
+  # 配置 MySQL 服务
+  mysql:
+    restart: always
+    # 镜像文件
+    image: mysql:8.0.27
+    # 容器名称
+    container_name: mysql
+
+    # todo 宿主机映射端口可以自定义，这里默认 9002
+    # 端口映射，宿主机:容器
+    ports:
+      - "9002:3306"
+
+    # todo ${your_mysql_password} 修改为自己的 MySQL 数据库密码
+    # 配置环境，这里配置 MySQL 密码，用户名为 root
+    environment:
+      - MYSQL_ROOT_PASSWORD=${your_mysql_password}
+
+    # todo 数据卷选择一个合适的地方存放，建议将下面 teainn 改为自己的名字
+    # 配置挂载文件夹，以确保容器重启之后数据还存在
+    volumes:
+      - /home/teainn/data/mysql/conf:/etc/mysql/conf.d
+      - /home/teainn/data/mysql/logs:/logs
+      - /home/teainn/data/mysql/data:/var/lib/mysql
+
+  # 配置 Redis 服务
+  redis:
+    restart: always
+    # 镜像文件
+    image: redis:6.2.7
+    # 容器名称
+    container_name: redis
+
+    # todo ${your_redis_password} 修改为自己的 Redis 数据库密码
+    # 设置命令，此处设置密码，用户名为 root
+    command: redis-server --requirepass ${your_redis_password}
+
+    # todo 宿主机映射端口可以自定义，这里默认 9003
+    # 端口映射
+    ports:
+      - "9003:6379"
+
+    # todo 数据卷选择一个合适的地方存放，建议将下面 teainn 改为自己的名字
+    # 配置挂载文件夹，以确保容器重启之后数据还存在
+    volumes:
+      - /home/teainn/data/redis:/data
+
+  # 配置 Spring Boot 服务
+  springboot:
+    # todo 修改为存放 Dockerfile 的绝对路径或相对路径
+    # 生成镜像，在指定目录下用 Dockerfile 生成一个镜像
+    build: /home/teainn/project/teainit/teainit-backend
+    # 指定生成镜像的名字和版本号
+    image: teainit:v1.0.0
+    # 容器名称
+    container_name: teainit-backend
+
+    # todo 宿主机映射端口可以自定义，这里默认 9006
+    # 端口映射，宿主机:容器
+    ports:
+      - "9015:7789"
+    # springboot 依赖服务，有 mysql 以及 redis，这里的名称是 service 名
+    depends_on:
+      - mysql
+      - redis
